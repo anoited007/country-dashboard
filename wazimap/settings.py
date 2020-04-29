@@ -17,7 +17,7 @@ WSGI_APPLICATION = 'wazimap.wsgi.application'
 ADMINS = (('Greg Kempe', 'greg@code4sa.org'),)
 MANAGERS = ADMINS
 
-DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://wazimap:wazimap@localhost/wazimap')
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://wider:wider@localhost/wider')
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL),
 }
@@ -38,9 +38,8 @@ INSTALLED_APPS = [
 ]
 
 ALLOWED_HOSTS = ['*']
-TIME_ZONE = 'Africa/Johannesburg'
-LANGUAGE_CODE = 'en-za'
-USE_I18N = False
+TIME_ZONE = 'Indian/Mauritius'
+USE_I18N = True
 USE_L10N = True
 USE_THOUSAND_SEPARATOR = True
 USE_TZ = True
@@ -168,24 +167,28 @@ LOGGING = {
 # Redirect www.foo.com to foo.com? This is the reverse of Django's PREPEND_WWW
 STRIP_WWW = False
 
+
 WAZIMAP = {
     # The full name of the website
-    'name': 'Wazimap',
+    'name': 'Country Dashboard',
 
     # The site's base URL, including scheme.
     # NOTE: if your site supports HTTPS, this MUST be
     # an 'https' url, otherwise embeds that are over HTTPS might
     # not load correctly.
-    'url': 'http://wazimap.example',
+    'url': '',
 
     # Twitter handle
-    'twitter': '@Wazimap',
+    'twitter': '',
 
     # Google Analytics tracking id (ua-xxxxx-x)
     'ga_tracking_id': '',
 
+    # Profile buiilder
+    'profile_builder': 'wazimap.profiles.get_profile',
+
     # Two-letter country code for the country this site relates to
-    'country_code': '',
+    'country_code': 'AA',
 
     # Google Geocoding API key, if you want to use more than the free limit
     'google_geocode_api_key': '',
@@ -217,7 +220,7 @@ WAZIMAP = {
     },
 
     # ordered list of levels to compare a place to; should generally be 2-3 levels only.
-    'comparative_levels': [],
+    'comparative_levels': ['country', 'continent'],
 
     # Map from geometry names to local static files with geometry data. This is used
     # to both draw maps in webpages and for geolocation.

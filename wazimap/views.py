@@ -9,11 +9,13 @@ from django.utils.module_loading import import_string
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.views.generic import View, TemplateView
 from django.shortcuts import redirect
+from wazimap.profiles import enhance_api_data
 
-from census.views import GeographyDetailView as BaseGeographyDetailView, LocateView as BaseLocateView, render_json_to_response
+from census.views import GeographyDetailView as BaseGeographyDetailView, LocateView \
+    as BaseLocateView, render_json_to_response
 
 from wazimap.geo import geo_data, LocationNotFound
-from wazimap.profiles import enhance_api_data
+# from wazimap.profiles import enhance_api_data
 from wazimap.data.tables import get_datatable
 from wazimap.data.utils import dataset_context, get_page_releases
 from wazimap.data.download import DownloadManager

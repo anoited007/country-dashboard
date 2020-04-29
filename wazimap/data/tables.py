@@ -5,7 +5,6 @@ import sqlalchemy.types
 
 from wazimap.data.utils import get_datatable as actual_get_datatable
 
-
 '''
 DEPRECATED!
 
@@ -13,7 +12,6 @@ Legacy models for handling census data. These are deprecated and will be removed
 in the next version of Wazimap. They only exist in stub form to aid with migrating
 to the new, Django-based models using `manage.py upgradetables`.
 '''
-
 
 # Postgres has a max name length of 63 by default, reserving up to
 # 13 chars for the _municipality ending
@@ -71,7 +69,8 @@ class SimpleTable(object):
                               'number' or 'percentage'
         :param str db_table: name of an existing database table to use for this data table.
         """
-        warnings.warn("SimpleTables are no longer used. Use `python manage.py upgradetables` to migrate.", DeprecationWarning)
+        warnings.warn("SimpleTables are no longer used. Use `python manage.py upgradetables` to migrate.",
+                      DeprecationWarning)
         self.id = id.upper()
         self.db_table = db_table or self.id.lower()
 
@@ -84,6 +83,7 @@ class SimpleTable(object):
         self.stat_type = stat_type
 
         DATA_TABLES[self.id] = self
+
 
 FIELD_TABLE_FIELDS = set()
 FIELD_TABLES = {}
@@ -117,6 +117,7 @@ class FieldTable(SimpleTable):
         col6: male > 18
 
     """
+
     def __init__(self, fields, id=None, universe='Population', description=None, denominator_key=None,
                  has_total=True, value_type='Integer', stat_type='number', db_table=None, **kwargs):
         """
@@ -146,7 +147,8 @@ class FieldTable(SimpleTable):
                              i.e. `population group` by `gender`, and `gender` by `population group`,
                              to use the same database table.
         """
-        warnings.warn("FieldTables are no longer used. Use `python manage.py upgradetables` to migrate.", DeprecationWarning)
+        warnings.warn("FieldTables are no longer used. Use `python manage.py upgradetables` to migrate.",
+                      DeprecationWarning)
         description = description or (universe + ' by ' + ', '.join(fields))
         id = id or get_table_id(fields)
 
@@ -162,6 +164,7 @@ class FieldTable(SimpleTable):
 
         FIELD_TABLE_FIELDS.update(self.fields)
         FIELD_TABLES[self.id] = self
+
 
 def get_table_id(fields):
     sorted_fields = sorted(fields)

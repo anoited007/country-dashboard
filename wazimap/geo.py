@@ -52,9 +52,10 @@ class GeoData(object):
         """ Find all the geography versions.
         """
         self._versions = [x['version'] for x in self.geo_model.objects.values('version').distinct().all()]
-        self._global_latest_version = sorted(self.versions)[-1]
-        # _default_version = None means fall back to whatever is latest for geography
-        self._default_version = settings.WAZIMAP['default_geo_version']
+        if self._versions:
+            self._global_latest_version = sorted(self.versions)[-1]
+            # _default_version = None means fall back to whatever is latest for geography
+            self._default_version = settings.WAZIMAP['default_geo_version']
 
     @property
     def versions(self):
@@ -312,7 +313,9 @@ class GeoData(object):
 
     def first_child_level(self):
         # first child level in the hierarchy
-        return self.geo_levels[self.root_level]['children'][0]
+        if self.geo_levels[self.root_level]['children']:
+            return self.geo_levels[self.root_level]['children'][0]
+        pass
 
     def primary_release_year(self, geo):
         """ Return the primary release year to use for the provided geography.
@@ -326,7 +329,7 @@ geo_data = import_string(settings.WAZIMAP['geodata'])()
 
 
 def gdal_missing(critical=False):
-    log.warn("NOTE: Wazimap is unable to load GDAL, it's probably not installed. "
+    log.warning("NOTE: Wazimap is unable to load GDAL, it's probably not installed. "
              "Some functionality such as data downloads and geolocation won't work. This is ok in development, but "
              "is a problem in production. For more information on installing GDAL, see http://wazimap.readthedocs.io/en/latest/")
 
