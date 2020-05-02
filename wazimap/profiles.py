@@ -2,6 +2,7 @@ from wazimap.data.utils import get_session, merge_dicts, group_remainder
 from wazimap.geo import geo_data
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 from wazimap import (
@@ -11,7 +12,6 @@ from wazimap import (
     marketshare,
     v6marketshare
 )
-
 
 # ensure tables are loaded
 
@@ -48,14 +48,18 @@ def get_profile(geo, profile_name, request):
 def get_demographics_profile(geo, session):
     return demographics.get_demographics_profile(geo, session)
 
+
 def get_access_profile(geo, session):
     return access.get_access_profile(geo, session)
+
 
 def get_ipv6_profile(geo, session):
     return ipv6.get_ipv6_profile(geo, session)
 
+
 def get_marketshare_profile(geo, session):
     return marketshare.get_marketshare_profile(geo, session)
+
 
 def get_v6marketshare_profile(geo, session):
     return v6marketshare.get_v6marketshare_profile(geo, session)

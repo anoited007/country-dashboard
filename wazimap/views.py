@@ -9,7 +9,7 @@ from django.utils.module_loading import import_string
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.views.generic import View, TemplateView
 from django.shortcuts import redirect
-from wazimap.profiles import enhance_api_data
+# from wazimap.profiles import enhance_api_data
 
 from census.views import GeographyDetailView as BaseGeographyDetailView, LocateView \
     as BaseLocateView, render_json_to_response

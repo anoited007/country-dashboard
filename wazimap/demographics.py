@@ -8,6 +8,7 @@ from wazimap.data.tables import get_datatable
 # from wazimap.data.tables import get_datatable, get_model_from_fields  Custom edit
 logger = logging.getLogger(__name__)
 
+
 def get_demographics_profile(geo, session):
     simple_v6pop = get_datatable('st_v6pop')
     total_users = OrderedDict()
@@ -28,13 +29,12 @@ def get_demographics_profile(geo, session):
     try:
         total_v6, _ = simple_v6pop.get_stat_data(geo, 'total_v6')
     except Exception as e:
-        total_v6 = {'total_users': {'numerators': {'this': 0}}}    
+        total_v6 = {'total_users': {'numerators': {'this': 0}}}
 
     try:
         parent = geo.parent.name
     except Exception as e:
         parent = None
-    
 
     return {
         'has_data': True,

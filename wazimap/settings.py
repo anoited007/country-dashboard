@@ -235,16 +235,18 @@ WAZIMAP = {
     #
     # If a level isn't specified here, Wazimap will try to find a file under the key `''`.
     'geometry_data': {
-        '': {
-            '': 'geo/all.geojson',
+        '2018-03': {
+            'world': 'geo/world.topojson',
+            'continent': 'geo/continent.topojson',
+            'country': 'geo/country.topojson'
         },
     },
 
     # centre coordinates and zoom level defaults for maps. Centre must be a ``[lat, long]`` pair
     # and zoom is a zoom level (1-12).
     # If not set, the centre is determined from the geometry.
-    'map_centre': None,
-    'map_zoom': None,
+    'map_centre': [45, 0],
+    'map_zoom': 2,
 
     # URL where embeds are hosted, default is the site URL
     # NOTE: if your site supports HTTPS, this MUST be
@@ -259,7 +261,7 @@ WAZIMAP = {
     # uses the most recent version of the Geography. This is useful if your
     # geography table contains more recent geographies, but you don't want
     # to use the latest when the request doesn't specifify a version.
-    'default_geo_version': None,
+    'default_geo_version': '2018-03',
 
     # The geo version to use for legacy embeds that don't specify a geo version.
     # If None, uses the latest version.
@@ -273,4 +275,7 @@ WAZIMAP = {
     # levels, such as a 2010 national census down to the city level, and a 2015
     # partial census to the provincial level.
     'primary_release_year': {},
+
+    'latest_release_year': '',
 }
+
