@@ -14,7 +14,7 @@ TESTING = 'test' in sys.argv[1:3]
 ROOT_URLCONF = 'wazimap.urls'
 WSGI_APPLICATION = 'wazimap.wsgi.application'
 
-ADMINS = (('Greg Kempe', 'greg@code4sa.org'),)
+ADMINS = (('Amreesh Phokeer', 'amreesh@afrinic.net'),)
 MANAGERS = ADMINS
 
 DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://wider:wider@localhost/wider')
@@ -213,10 +213,19 @@ WAZIMAP = {
     #   ...
     # }
     'levels': {
+        'world': {
+            'plural': 'worlds',
+            'children': ['continent']
+        },
+        'continent': {
+            'plural': 'continents',
+            'children': ['country']
+        },
         'country': {
             'plural': 'countries',
-            'children': [],
-        }
+            'children': []
+    },
+
     },
 
     # ordered list of levels to compare a place to; should generally be 2-3 levels only.
@@ -277,5 +286,6 @@ WAZIMAP = {
     'primary_release_year': {},
 
     'latest_release_year': '',
+
 }
 

@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.postgres.fields import ArrayField
 
+
 # Geographies
 class GeoMixin(object):
     def as_dict(self):

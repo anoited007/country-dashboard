@@ -12,11 +12,11 @@ from wazimap.models import Geography
 
 log = logging.getLogger(__name__)
 
-
 # GDAL is difficult to install, so we make it an optional dependency.
 # Here, we check if it's installed and warn if it isn't.
 try:
     import osgeo.gdal  # noqa
+
     HAS_GDAL = True
 except ImportError:
     HAS_GDAL = False
@@ -24,6 +24,14 @@ except ImportError:
 
 class LocationNotFound(Exception):
     pass
+
+
+def primary_release_year(geo):
+    """ Return the primary release year to use for the provided geography.
+    This uses the `WAZIMAP['primary_release_year']` setting to lookup the
+    year based on the geo's level, and defaults to `latest`.
+    """
+    return settings.WAZIMAP['primary_release_year'].get(geo.geo_level, 'latest')
 
 
 class GeoData(object):
@@ -129,7 +137,8 @@ class GeoData(object):
 
         for level in self.geo_levels.keys():
             # sanity check for geo version
-            if level in self.geometry_files or self.geometry_files.keys() == [''] and isinstance(self.geometry_files[''], basestring):
+            if level in self.geometry_files or self.geometry_files.keys() == [''] and isinstance(
+                    self.geometry_files[''], basestring):
                 # The geometry_data must include a version key. For example:
                 #
                 # geometry_data = {
@@ -153,7 +162,8 @@ class GeoData(object):
                 #   }
                 # }
                 suggestion = {'': self.geometry_files}
-                raise ValueError("The geometry_data setting is missing a geometry version key. You probably aren't using geometry versions just need to " +
+                raise ValueError("The geometry_data setting is missing a geometry version key. You probably aren't "
+                                 "using geometry versions just need to " +
                                  "change WAZIMAP['geometry_data'] to be: %s" % suggestion)
 
             for version in self.geometry_files.keys():
@@ -162,7 +172,8 @@ class GeoData(object):
                     continue
 
                 if js['type'] != 'FeatureCollection':
-                    raise ValueError("GeoJSON files must contain a FeatureCollection. The file %s has type %s" % (fname, js['type']))
+                    raise ValueError(
+                        "GeoJSON files must contain a FeatureCollection. The file %s has type %s" % (fname, js['type']))
 
                 level_detail = self.geometry.setdefault(version, {}).setdefault(level, {})
 
@@ -203,7 +214,9 @@ class GeoData(object):
                 return fname, json.load(f)
         except IOError as e:
             if e.errno == 2:
-                log.warn("Couldn't open geometry file %s -- no geometry will be available for level %s and version '%s'" % (fname, level, version))
+                log.warn(
+                    "Couldn't open geometry file %s -- no geometry will be available for level %s and version '%s'" % (
+                        fname, level, version))
             else:
                 raise e
 
@@ -330,8 +343,9 @@ geo_data = import_string(settings.WAZIMAP['geodata'])()
 
 def gdal_missing(critical=False):
     log.warning("NOTE: Wazimap is unable to load GDAL, it's probably not installed. "
-             "Some functionality such as data downloads and geolocation won't work. This is ok in development, but "
-             "is a problem in production. For more information on installing GDAL, see http://wazimap.readthedocs.io/en/latest/")
+                "Some functionality such as data downloads and geolocation won't work. This is ok in development, but "
+                "is a problem in production. For more information on installing GDAL, "
+                "see http://wazimap.readthedocs.io/en/latest/")
 
     if critical:
         raise Exception("GDAL must be installed for this functionality to work.")

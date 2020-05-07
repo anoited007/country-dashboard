@@ -9,7 +9,7 @@ from django.utils.module_loading import import_string
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.views.generic import View, TemplateView
 from django.shortcuts import redirect
-# from wazimap.profiles import enhance_api_data
+from wazimap.profiles import enhance_api_data
 
 from census.views import GeographyDetailView as BaseGeographyDetailView, LocateView \
     as BaseLocateView, render_json_to_response
@@ -84,8 +84,8 @@ class GeographyDetailView(BaseGeographyDetailView):
             profile_data = profile_method(self.geo, self.profile_name, self.request)
 
         profile_data['geography'] = self.geo.as_dict_deep()
-        profile_data['primary_releases'] = get_page_releases(
-            settings.WAZIMAP['primary_dataset_name'], self.geo, year)
+        # profile_data['primary_releases'] = get_page_releases(
+        #     settings.WAZIMAP['primary_dataset_name'], self.geo, year)
 
         profile_data = enhance_api_data(profile_data)
         page_context.update(profile_data)
